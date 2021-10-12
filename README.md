@@ -1,0 +1,1 @@
+modprobe v4l2loopback exclusive_caps=1 video_nr=2 # creates /dev/video2
