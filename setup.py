@@ -3,7 +3,8 @@ from setuptools import find_packages, setup
 
 requirements = [
     "pyfakewebcam==0.1.0",
-    "yacs==0.1.8"
+    "yacs==0.1.8",
+    "tensorflow==2.4.1"
 ]
 
 
