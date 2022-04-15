@@ -9,7 +9,7 @@ Go through the following steps to get your environment up and running.
 To install the WebCam Effects module run the following command:
 
 ```bash
-pip install .
+pip install -e .
 ```
 
 obs: It has only been tested on python 3.7 but it is likely to work on other versions.

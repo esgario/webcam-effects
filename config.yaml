@@ -1,3 +1,6 @@
+IMAGE_HEIGHT: 480
+IMAGE_WIDTH: 640
 VIDEO_DEVICE:
   REAL: "/dev/video0"
   VIRTUAL: "/dev/video2"
+SHOW_FPS: true

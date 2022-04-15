@@ -1,16 +1,26 @@
+import cv2
 import time
 from collections import deque
 
 times = deque(maxlen=30)
 
 
-def update_fps():
+def update():
     times.append(time.time())
 
 
-def get_fps():
+def get():
     fps = 0
     if len(times) >= 2:
         sec_per_frame = (times[-1] - times[0]) / len(times)
         fps = 1 / sec_per_frame
-    return fps
+    return round(fps)
+
+
+def print(image):
+    image = cv2.flip(image, 1)
+    cv2.putText(
+        image, f"FPS: {get()}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
+        1, (255, 255, 255), 2, cv2.LINE_AA
+    )
+    return cv2.flip(image, 1)

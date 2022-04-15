@@ -1,14 +1,14 @@
 from . import model
-from .remove_background import remove_background
+from .bg_remove import apply as bg_remove
 
 
-def get_effects(cfg):
+def get(cfg):
     effects = []
-    effects.append(remove_background)
+    effects.append(bg_remove)
     return effects
 
 
-def apply_effects(image, effects):
+def apply(image, effects):
     for func in effects:
         image = func(image)
     return image

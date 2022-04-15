@@ -8,7 +8,7 @@ for g in gpu_devices:
     tf.config.experimental.set_memory_growth(g, True)
 
 MODEL = tf.keras.models.load_model(
-    'weights/wce_v0.1.h5', custom_objects={'tf': tf})
+    'weights/model', custom_objects={'tf': tf})
 
 
 def _inference(image):
