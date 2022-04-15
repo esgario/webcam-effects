@@ -32,7 +32,7 @@ class OnnxModel:
 def _inference(image, device, blur_kernel):
     global MODEL
     if MODEL is None:
-        MODEL = OnnxModel('./weights/SINet.onnx', device)
+        MODEL = OnnxModel('./weights/model.onnx', device)
 
     shape = image.shape[:2][::-1]
     image = normalize_image(image)
