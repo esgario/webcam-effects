@@ -18,3 +18,9 @@ _C.VIDEO_DEVICE.VIRTUAL = ""
 
 # Enable/Disable FPS
 _C.SHOW_FPS = False
+
+# Inference Device (CPU, GPU)
+_C.DEVICE = "CPU"
+
+# Effects list
+_C.EFFECTS = []

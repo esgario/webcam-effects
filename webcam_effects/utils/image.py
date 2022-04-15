@@ -1,14 +1,22 @@
 import cv2
+import numpy as np
+
+MEAN = np.array([102.890434, 111.25247, 126.91212], dtype=np.float32)
+STD = np.array([62.93292, 62.82138, 66.355705], dtype=np.float32)
 
 
-def normalize_image(
-    image,
-    input_shape=(224, 300),
-    mean=(0.485, 0.456, 0.406),
-    std=(0.229, 0.224, 0.225)
-):
+def normalize_image(frame):
     """Normalizes image before inference."""
-    image = cv2.resize(image, input_shape[::-1])
-    image = image.astype("f4") / 255.0
-    image = (image - mean) / std
-    return image.astype("f4")
+    h, w = 320, 320
+
+    frame = cv2.resize(frame, (h, w))
+    frame = frame.astype(np.float32)
+
+    # Normalize and add batch dimension
+    img = frame
+    img = (img - MEAN) / STD
+    img /= 255
+    img = img.transpose((2, 0, 1))
+    img = img[np.newaxis,...]
+
+    return img

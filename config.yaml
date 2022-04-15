@@ -4,3 +4,8 @@ VIDEO_DEVICE:
   REAL: "/dev/video0"
   VIRTUAL: "/dev/video2"
 SHOW_FPS: true
+DEVICE: "CPU"
+EFFECTS:
+  - name: "BG_BLUR"
+    args:
+      kernel_size: 20

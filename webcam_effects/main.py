@@ -13,7 +13,7 @@ def loop():
     load_config()
 
     frame = real_cam.get_frame()
-    frame = effects.apply(frame, effects_list)
+    frame = effects.apply(frame, cfg)
 
     if cfg.SHOW_FPS:
         frame = fps.print(frame)
@@ -25,7 +25,6 @@ def loop():
 def init():
     global real_cam, virtual_cam, effects_list
     real_cam, virtual_cam = webcam.get_devices(cfg)
-    effects_list = effects.get(cfg)
 
     print("Starting WebCam Effects.")
 
