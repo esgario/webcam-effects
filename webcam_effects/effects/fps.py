@@ -17,10 +17,10 @@ def get():
     return round(fps)
 
 
-def print(image):
-    image = cv2.flip(image, 1)
+def apply(image, cfg):
+    update()
     cv2.putText(
         image, f"FPS: {get()}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
         1, (255, 255, 255), 2, cv2.LINE_AA
     )
-    return cv2.flip(image, 1)
+    return image

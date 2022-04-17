@@ -5,9 +5,9 @@ MEAN = np.array([102.890434, 111.25247, 126.91212], dtype=np.float32)
 STD = np.array([62.93292, 62.82138, 66.355705], dtype=np.float32)
 
 
-def normalize_image(frame):
+def normalize_image(frame, shape=(320, 320)):
     """Normalizes image before inference."""
-    h, w = 320, 320
+    h, w = shape
 
     frame = cv2.resize(frame, (h, w))
     frame = frame.astype(np.float32)

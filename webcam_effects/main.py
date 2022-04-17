@@ -1,6 +1,5 @@
 
 from webcam_effects.configs import cfg, load_config
-from webcam_effects.utils import fps
 from webcam_effects import webcam
 from webcam_effects import effects
 
@@ -14,10 +13,6 @@ def loop():
 
     frame = real_cam.get_frame()
     frame = effects.apply(frame, cfg)
-
-    if cfg.SHOW_FPS:
-        frame = fps.print(frame)
-        fps.update()
 
     virtual_cam.schedule_frame(frame)
 
