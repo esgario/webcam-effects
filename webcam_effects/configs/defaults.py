@@ -16,9 +16,6 @@ _C.VIDEO_DEVICE.REAL = ""
 # Virtual video device path
 _C.VIDEO_DEVICE.VIRTUAL = ""
 
-# Enable/Disable FPS
-_C.SHOW_FPS = False
-
 # Inference Device (CPU, GPU)
 _C.DEVICE = "CPU"
 

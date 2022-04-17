@@ -1,11 +1,28 @@
-IMAGE_HEIGHT: 480
-IMAGE_WIDTH: 640
+IMAGE_HEIGHT: 720
+IMAGE_WIDTH: 1280
 VIDEO_DEVICE:
   REAL: "/dev/video0"
   VIRTUAL: "/dev/video2"
-SHOW_FPS: true
-DEVICE: "CPU"
+DEVICE: "GPU"
 EFFECTS:
   - name: "BG_BLUR"
+    enable: true
     args:
-      kernel_size: 20
+      kernel_size: 30
+      dilate: 5
+  - name: "BG_REMOVE"
+    enable: false
+    args:
+      inverted: false
+      dilate: 5
+  - name: "STYLE_TRANSFER"
+    enable: false
+    args:
+      style: "mosaic"
+  - name: "FLIP"
+    enable: true
+    args:
+      horizontal: false
+      vertical: false
+  - name: "FPS"
+    enable: true
