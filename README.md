@@ -25,5 +25,5 @@ modprobe v4l2loopback exclusive_caps=1 video_nr=2 # creates /dev/video2
 ### Download model
 The model must be downloaded to the `weights` folder:
 ```bash
-wget https://www.dropbox.com/s/ui2j9444074lean/model.onnx -OP weights/
+wget -N https://www.dropbox.com/s/pxptykehvvvgcec/weights.zip && unzip -o weights.zip
 ```
