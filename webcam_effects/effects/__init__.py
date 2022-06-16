@@ -3,6 +3,7 @@ from . import bg_remove
 from . import style_transfer
 from . import flip
 from . import fps
+from . import face_det
 
 
 EFFECTS = {
@@ -10,11 +11,13 @@ EFFECTS = {
     'BG_REMOVE': bg_remove,
     'STYLE_TRANSFER': style_transfer,
     'FLIP': flip,
-    'FPS': fps
+    'FPS': fps,
+    'FACE_DETECTION': face_det
 }
 
 def apply(image, cfg):
 
+    image = image.astype("f4")
     for effect in cfg.EFFECTS:
         assert "name" in effect, "Effect name is missing."
 
@@ -26,4 +29,4 @@ def apply(image, cfg):
         else:
             print("Effect '{}' not found.".format(effect))
 
-    return image
+    return image.astype("u1")

@@ -5,8 +5,10 @@ VIDEO_DEVICE:
   VIRTUAL: "/dev/video2"
 DEVICE: "GPU"
 EFFECTS:
-  - name: "BG_BLUR"
+  - name: "FACE_DETECTION"
     enable: true
+  - name: "BG_BLUR"
+    enable: false
     args:
       kernel_size: 30
       dilate: 5
@@ -20,7 +22,7 @@ EFFECTS:
     args:
       style: "mosaic"
   - name: "FLIP"
-    enable: true
+    enable: false
     args:
       horizontal: false
       vertical: false
