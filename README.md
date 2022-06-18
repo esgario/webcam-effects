@@ -19,7 +19,7 @@ obs: It has only been tested on python 3.7 but it is likely to work on other ver
 To create the virtual video device run the following command:
 
 ```bash
-modprobe v4l2loopback exclusive_caps=1 video_nr=2 # creates /dev/video2
+sudo modprobe v4l2loopback exclusive_caps=1 video_nr=2 # creates /dev/video2
 ```
 
 ### Download model

@@ -3,10 +3,7 @@ import numpy as np
 
 
 def normalize_image(
-    frame,
-    mean=(102.9, 111.3, 126.9),
-    std=(62.9, 62.8, 66.4),
-    shape=(320, 320)
+    frame, mean=(102.9, 111.3, 126.9), std=(62.9, 62.8, 66.4), shape=(320, 320)
 ):
     """Normalizes image before inference."""
     h, w = shape
@@ -20,8 +17,8 @@ def normalize_image(
     # Normalize and add batch dimension
     img = frame
     img = (img - mean) / std
-    img /= 255
+    img /= 255.0
     img = img.transpose((2, 0, 1))
-    img = img[np.newaxis,...]
+    img = img[np.newaxis, ...]
 
     return img

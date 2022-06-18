@@ -1,32 +1,25 @@
-from . import bg_blur
-from . import bg_remove
-from . import style_transfer
-from . import flip
-from . import fps
-from . import face_det
+import abc
+from webcam_effects.configs import cfg
 
 
-EFFECTS = {
-    'BG_BLUR': bg_blur,
-    'BG_REMOVE': bg_remove,
-    'STYLE_TRANSFER': style_transfer,
-    'FLIP': flip,
-    'FPS': fps,
-    'FACE_DETECTION': face_det
-}
+class EffectBase(abc.ABC):
+    """Base class for all effects."""
 
-def apply(image, cfg):
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        self.loaded = False
 
-    image = image.astype("f4")
-    for effect in cfg.EFFECTS:
-        assert "name" in effect, "Effect name is missing."
+    @abc.abstractmethod
+    def run(self):
+        """Run effect."""
+        pass
 
-        if effect["name"] in EFFECTS:
-            if effect.get("enable", False):
-                kwargs = effect.get("args", {})
-                image = EFFECTS[effect["name"]].apply(image, cfg, **kwargs)
+    def load(self, *args):
+        """Load any effect model."""
+        self.loaded = True
 
-        else:
-            print("Effect '{}' not found.".format(effect))
+    def __call__(self, frame):
+        if not self.loaded:
+            self.load(cfg.DEVICE)
 
-    return image.astype("u1")
+        return self.run(frame)

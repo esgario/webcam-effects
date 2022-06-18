@@ -3,6 +3,7 @@ from .defaults import _C as cfg
 
 CFG_PATH = "config.yaml"
 
+
 def load_config():
     """Load the config file."""
     try:
@@ -11,8 +12,12 @@ def load_config():
             print("Updating config.")
             cfg.merge_from_file(CFG_PATH)
             load_config.last_cfg_mtime = cfg_mtime
+            return True
     except OSError:
         pass
+
+    return False
+
 
 load_config.last_cfg_mtime = None
 load_config()
