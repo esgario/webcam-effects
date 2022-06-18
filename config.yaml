@@ -5,6 +5,11 @@ VIDEO_DEVICE:
   VIRTUAL: "/dev/video2"
 DEVICE: "GPU"
 EFFECTS:
+  - name: "FACE_FOLLOW"
+    enable: true
+    args:
+      scale: 0.8
+      filter: 0.8
   - name: "BG_BLUR"
     enable: true
     args:
@@ -14,15 +19,20 @@ EFFECTS:
     enable: false
     args:
       inverted: false
-      dilate: 5
-  - name: "STYLE_TRANSFER"
-    enable: false
-    args:
-      style: "mosaic"
+      kernel_size: 20
+      dilate: 15
   - name: "FLIP"
-    enable: true
+    enable: false
     args:
       horizontal: false
       vertical: false
+  - name: LIGHT_ENHANCE
+    enable: true
+    args:
+      level: 0.2
   - name: "FPS"
     enable: true
+    args:
+      flip: false
+      scale: 1.5
+      color: [255, 0, 0]
