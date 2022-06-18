@@ -5,7 +5,8 @@ requirements = [
     "pyfakewebcam==0.1.0",
     "yacs==0.1.8",
     "onnxruntime-gpu==1.10.0",
-    "opencv-python==4.5.5.64"
+    "opencv-python==4.5.5.64",
+    "nms==0.1.6",
 ]
 
 
@@ -16,5 +17,5 @@ setup(
     description="WebCam Effects",
     author="Guilherme Esgario",
     packages=find_packages(),
-    install_requires=requirements
+    install_requires=requirements,
 )

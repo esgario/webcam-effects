@@ -1,7 +1,7 @@
 import onnxruntime as ort
 
-class OnnxModel:
 
+class OnnxModel:
     def __init__(self, model_path, device):
         self.model_path = model_path
         self.device = device
@@ -10,13 +10,14 @@ class OnnxModel:
     def _get_providers(self, device):
         providers = []
         if device.upper() == "GPU":
-            providers.append('CUDAExecutionProvider')
-        providers.append('CPUExecutionProvider')
+            providers.append("CUDAExecutionProvider")
+        providers.append("CPUExecutionProvider")
         return providers
 
     def load_model(self):
         self.sess = ort.InferenceSession(
-            self.model_path, providers=self._get_providers(self.device))
+            self.model_path, providers=self._get_providers(self.device)
+        )
         self.input_name = self.sess.get_inputs()[0].name
         self.input_shape = self.sess.get_inputs()[0].shape
         self.output_name = self.sess.get_outputs()[0].name
