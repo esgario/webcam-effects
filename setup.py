@@ -7,6 +7,8 @@ requirements = [
     "onnxruntime-gpu==1.10.0",
     "opencv-python==4.5.5.64",
     "nms==0.1.6",
+    "pypeln==0.4.9",
+    "numba==0.55.2",
 ]
 
 

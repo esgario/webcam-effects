@@ -11,6 +11,7 @@ def load_model(device):
 
 def predict(model, frame, blur_kernel=(5, 5), dilate=0):
     shape = frame.shape[:2][::-1]
+    frame = cv2.resize(frame, (320, 320))
     frame = normalize_image(frame)
     pred = model.predict(frame)[0]
     mask = np.argmax(pred[0], axis=0).astype("f4")

@@ -1,5 +1,6 @@
-from nms import nms
+import cv2
 import numpy as np
+from nms import nms
 
 from . import OnnxModel
 from webcam_effects.utils.image import normalize_image
@@ -11,9 +12,8 @@ def load_model(device):
 
 def predict(model, frame):
     input_shape = frame.shape[:2]
-    frame = normalize_image(
-        frame, mean=(127, 127, 127), std=(0.5, 0.5, 0.5), shape=(640, 480)
-    )
+    frame = cv2.resize(frame, (640, 480))
+    frame = normalize_image(frame, mean=(127, 127, 127), std=(0.5, 0.5, 0.5))
     pred = model.predict(frame)
     boxes, labels, confs = postprocessing(pred, input_shape)
     keep = nms.boxes(boxes, confs, confidence_threshold=0.5)
