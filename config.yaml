@@ -16,13 +16,12 @@ EFFECTS:
       kernel_size: 30
       dilate: 5
   - name: "BG_REMOVE"
-    enable: false
+    enable: true
     args:
-      inverted: false
       kernel_size: 20
       dilate: 15
   - name: "FLIP"
-    enable: false
+    enable: true
     args:
       horizontal: false
       vertical: false

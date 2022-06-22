@@ -1,27 +1,23 @@
 import cv2
 import numpy as np
 
-from . import EffectBase
-from .models.face_detection import load_model, predict
+from webcam_effects.utils.pipeline import PipelineStep
+from webcam_effects.effects.models.face_detection import FaceFollow
 
 
-class Effect(EffectBase):
+class Effect(PipelineStep):
     def __init__(self, scale=0.8, filter=0.8, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.model = None
         self.scale = scale
         self.filter = filter
+        self.model = FaceFollow()
         self.last_center = np.array((320, 640)).astype(int)
 
-    def load(self, device):
-        super().load()
-        self.model = load_model(device)
-
-    def process(self, frame):
+    def handle_message(self, frame):
         shape = np.array(frame.shape).astype(float)
         cs = ((shape[:2] * self.scale) / 2).astype(int)
 
-        boxes, _, _ = predict(self.model, frame)
+        boxes, _, _ = self.model.predict(frame)
         best_area = 0
         if len(boxes):
             best_box = boxes[0]
@@ -44,12 +40,4 @@ class Effect(EffectBase):
         crop = frame[c[0] - cs[0] : c[0] + cs[0], c[1] - cs[1] : c[1] + cs[1]]
         frame = cv2.resize(crop, np.array(shape[:2][::-1]).astype(int))
 
-        return frame
-
-    def run(self, frame):
-        if self.model is None:
-            return frame
-
-        out_frame = self.process(frame)
-
-        return out_frame
+        yield frame
