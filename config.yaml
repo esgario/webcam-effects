@@ -28,7 +28,11 @@ EFFECTS:
   - name: LIGHT_ENHANCE
     enable: false
     args:
-      level: 0.2
+      level: 0.47
+  - name: "BILATERAL_FILTER"
+    enable: true
+    args:
+      kernel_size: 5
   - name: "FPS"
     enable: true
     args:

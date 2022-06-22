@@ -7,7 +7,7 @@ from webcam_effects.effects.models.light_enhancement import LightEnhancement
 class Effect(PipelineStep):
     def __init__(self, level=5, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.level = level
+        self.level = (level * 2) - 1
         self.model = LightEnhancement()
 
     def handle_message(self, frame):
