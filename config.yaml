@@ -16,17 +16,17 @@ EFFECTS:
       kernel_size: 30
       dilate: 5
   - name: "BG_REMOVE"
-    enable: true
+    enable: false
     args:
       kernel_size: 20
       dilate: 15
   - name: "FLIP"
-    enable: true
+    enable: false
     args:
       horizontal: false
       vertical: false
   - name: LIGHT_ENHANCE
-    enable: true
+    enable: false
     args:
       level: 0.2
   - name: "FPS"
