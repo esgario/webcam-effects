@@ -1,25 +1,26 @@
 import cv2
 import numpy as np
 
-from . import OnnxModel
+from webcam_effects.configs import cfg
+from webcam_effects.effects.models import OnnxModel
 
 
-def load_model(device):
-    return OnnxModel("./weights/sci_512x512.onnx", device)
+class LightEnhancement(OnnxModel):
+    def __init__(self):
+        super().__init__("./weights/sci_512x512.onnx", cfg.DEVICE)
 
+    def predict(self, frame):
+        input_shape = frame.shape
 
-def predict(model, frame):
-    input_shape = frame.shape
+        frame = cv2.resize(frame, (512, 512))
+        frame = frame / 255.0
+        frame = frame.transpose((2, 0, 1))
+        frame = frame[np.newaxis, ...]
 
-    frame = cv2.resize(frame, (512, 512))
-    frame = frame / 255.0
-    frame = frame.transpose((2, 0, 1))
-    frame = frame[np.newaxis, ...]
+        pred = self._predict(frame)
+        output_frame = np.squeeze(pred[0])
+        output_frame = output_frame.transpose(1, 2, 0)
+        output_frame = output_frame * 255.0
+        output_frame = cv2.resize(output_frame, input_shape[:2][::-1])
 
-    pred = model.predict(frame)
-    output_frame = np.squeeze(pred[0])
-    output_frame = output_frame.transpose(1, 2, 0)
-    output_frame = output_frame * 255.0
-    output_frame = cv2.resize(output_frame, input_shape[:2][::-1])
-
-    return output_frame
+        return output_frame

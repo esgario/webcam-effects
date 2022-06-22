@@ -1,30 +1,18 @@
-import cv2
 import numpy as np
 
-from . import EffectBase
-from .models.light_enhancement import load_model, predict
+from webcam_effects.utils.pipeline import PipelineStep
+from webcam_effects.effects.models.light_enhancement import LightEnhancement
 
 
-class Effect(EffectBase):
-    def __init__(self, level=0.2, *args, **kwargs):
+class Effect(PipelineStep):
+    def __init__(self, level=5, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.model = None
-        self.level = level
+        self.level = (level * 2) - 1
+        self.model = LightEnhancement()
 
-    def load(self, device):
-        super().load()
-        self.model = load_model(device)
-
-    def process(self, frame):
-        new_frame = predict(self.model, frame)
+    def handle_message(self, frame):
+        new_frame = self.model.predict(frame)
         out_frame = frame * (1 - self.level) + new_frame * self.level
         out_frame = np.clip(out_frame, 0, 255)
-        return out_frame
 
-    def run(self, frame):
-        if self.model is None:
-            return frame
-
-        out_frame = self.process(frame)
-
-        return out_frame
+        yield out_frame

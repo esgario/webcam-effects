@@ -1,11 +1,7 @@
-import signal
-import threading
-import pypeln.thread as pl
-
-from queue import Queue
 from importlib import import_module
 
 from webcam_effects.configs import cfg, load_config
+from webcam_effects.utils.pipeline import Pipeline, PipelineStep
 from webcam_effects import webcam
 
 
@@ -14,55 +10,51 @@ virtual_cam = None
 effects_list = None
 
 
-def read_frames(Q, e):
-    while not e.is_set():
-        frame = real_cam.get_frame()
-        if not Q.full():
-            Q.put(frame)
+class ScheduleFrame(PipelineStep):
+    def __init__(self):
+        PipelineStep.__init__(self)
+
+    def handle_message(self, frame):
+        virtual_cam.schedule_frame(frame.astype("u1"))
+        yield None
 
 
-def get_frame_iterable(Q, e):
-    while not e.is_set():
-        if load_config():
-            break
-        yield Q.get().astype("f4")
+def build_pipeline():
+    steps = []
+    for effect in cfg.EFFECTS:
+        try:
+            if effect.get("enable", True):
+                kwargs = effect.get("args", {})
+                eff_mod = import_module(
+                    f"webcam_effects.effects.{effect['name'].lower()}"
+                )
+                steps.append(eff_mod.Effect(**kwargs))
+        except Exception as e:
+            print("Failed to load effect: {}. {}".format(effect, e))
+
+    steps.append(ScheduleFrame())
+
+    return Pipeline(steps)
 
 
-def schedule_frame(frame):
-    virtual_cam.schedule_frame(frame.astype("u1"))
-
-
-def init():
+def init_webcam():
     global real_cam, virtual_cam, effects_list
     real_cam, virtual_cam = webcam.get_devices(cfg)
     print("Starting WebCam Effects.")
 
 
 def main():
-    init()
+    init_webcam()
     try:
-        Q = Queue(maxsize=2)
-        kill_event = threading.Event()
-        thread = threading.Thread(target=read_frames, args=(Q, kill_event), daemon=True)
-        thread.start()
-
         while True:
-            stage = get_frame_iterable(Q, kill_event)
-            for effect in cfg.EFFECTS:
-                try:
-                    if effect.get("enable", True):
-                        kwargs = effect.get("args", {})
-                        eff_mod = import_module(
-                            f"webcam_effects.effects.{effect['name'].lower()}"
-                        )
-                        eff_obj = eff_mod.Effect(**kwargs)
-                        stage = pl.map(eff_obj, stage, maxsize=2)
-                except Exception:
-                    print("Failed to load effect: {}".format(effect))
-
-            list(pl.map(schedule_frame, stage, maxsize=2))
+            pipeline = build_pipeline()
+            pipeline.start()
+            while True:
+                if load_config():
+                    pipeline.join()
+                    break
+                frame = real_cam.get_frame()
+                pipeline.send_data(frame.astype("f4"))
 
     except KeyboardInterrupt:
-        print("Stopping.")
-        kill_event.set()
-        thread.join()
+        pipeline.join()

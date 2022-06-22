@@ -44,6 +44,7 @@ You can change the effects in real time by updating the `config.yaml` file.
 | `FACE_FOLLOW` | Follow the face | (`scale`: float,  `filter`: float) |
 | `FLIP` | Flip the image | (`horizontal`: bool, `vertical`: bool) |
 | `LIGHT_ENHANCE` | Enhance the light | (`level`: float) |
+| `BILATERAL_FILTER` | OpenCV Bilateral filter | (`kernel_size`: int) |
 | `FPS` | Show the FPS | (`flip`: bool, `scale`: float, `color`: list) |
 
 ___

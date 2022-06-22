@@ -1,7 +1,8 @@
+import abc
 import onnxruntime as ort
 
 
-class OnnxModel:
+class OnnxModel(abc.ABC):
     def __init__(self, model_path, device):
         self.model_path = model_path
         self.device = device
@@ -22,6 +23,10 @@ class OnnxModel:
         self.input_shape = self.sess.get_inputs()[0].shape
         self.output_name = self.sess.get_outputs()[0].name
 
-    def predict(self, img):
+    def _predict(self, img):
         pred = self.sess.run(None, {self.input_name: img})
         return pred
+
+    @abc.abstractmethod
+    def predict(self, *args, **kwargs):
+        pass

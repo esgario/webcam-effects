@@ -1,10 +1,11 @@
 import cv2
 import time
 from collections import deque
-from . import EffectBase
+
+from webcam_effects.utils.pipeline import PipelineStep
 
 
-class Effect(EffectBase):
+class Effect(PipelineStep):
     def __init__(
         self, flip=True, scale=1.25, thickness=8, color=(255, 0, 0), *args, **kwargs
     ):
@@ -38,7 +39,7 @@ class Effect(EffectBase):
             cv2.LINE_AA,
         )
 
-    def process(self, frame):
+    def handle_message(self, frame):
         self._update_fps()
         if self.flip:
             frame = cv2.flip(frame, 1)
@@ -46,9 +47,4 @@ class Effect(EffectBase):
         if self.flip:
             frame = cv2.flip(frame, 1)
 
-        return frame
-
-    def run(self, frame):
-        out_frame = self.process(frame)
-
-        return out_frame
+        yield frame
