@@ -24,6 +24,7 @@ To create the virtual video device run the following command:
 ```bash
 sudo modprobe v4l2loopback exclusive_caps=1 video_nr=2 # creates /dev/video2
 ```
+obs: It may require you to install v4l2loopback module (`sudo apt install v4l2loopback-dkms`)
 
 ### Running
 
