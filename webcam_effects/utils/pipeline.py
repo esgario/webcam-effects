@@ -88,7 +88,8 @@ class PipelineStep(Thread):
 
     def broadcast_message(self, message):
         for watcher in self.watchers:
-            watcher.send_message(message)
+            while not watcher.send_message(message):
+                continue
 
     def signalize_eof(self):
         while not self.send_message("eof"):
@@ -101,7 +102,7 @@ class PipelineStep(Thread):
 
     @abc.abstractmethod
     def handle_message(self, message):
-        # Handle received message. Abstract metod.
+        # Handle received message. Abstract method.
         return
 
     def run(self):
