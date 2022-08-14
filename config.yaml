@@ -25,10 +25,11 @@ EFFECTS:
     args:
       horizontal: false
       vertical: false
-  - name: LIGHT_ENHANCE
-    enable: false
+  - name: BRIGHTNESS_AND_CONTRAST
+    enable: true
     args:
-      level: 0.47
+      alpha: 1
+      beta: 0
   - name: "BILATERAL_FILTER"
     enable: true
     args:

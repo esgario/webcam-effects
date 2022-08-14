@@ -17,8 +17,8 @@ class OnnxModel(abc.ABC):
 
     def load_model(self):
         opts = ort.SessionOptions()
-        opts.inter_op_num_threads = 1
-        opts.intra_op_num_threads = 1
+        opts.inter_op_num_threads = 2
+        opts.intra_op_num_threads = 2
         self.sess = ort.InferenceSession(
             self.model_path,
             providers=self._get_providers(self.device),
