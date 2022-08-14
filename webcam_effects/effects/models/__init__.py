@@ -16,8 +16,13 @@ class OnnxModel(abc.ABC):
         return providers
 
     def load_model(self):
+        opts = ort.SessionOptions()
+        opts.inter_op_num_threads = 1
+        opts.intra_op_num_threads = 1
         self.sess = ort.InferenceSession(
-            self.model_path, providers=self._get_providers(self.device)
+            self.model_path,
+            providers=self._get_providers(self.device),
+            sess_options=opts,
         )
         self.input_name = self.sess.get_inputs()[0].name
         self.input_shape = self.sess.get_inputs()[0].shape

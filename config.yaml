@@ -3,7 +3,7 @@ IMAGE_WIDTH: 1280
 VIDEO_DEVICE:
   REAL: "/dev/video0"
   VIRTUAL: "/dev/video2"
-DEVICE: "GPU"
+DEVICE: "CPU"
 EFFECTS:
   - name: "FACE_FOLLOW"
     enable: true
