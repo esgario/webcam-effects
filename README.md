@@ -44,7 +44,7 @@ You can change the effects in real time by updating the `config.yaml` file.
 | `BG_REMOVE` | Remove the background | (`kernel_size`: int,  `dilate`: int) |
 | `FACE_FOLLOW` | Follow the face | (`scale`: float,  `filter`: float) |
 | `FLIP` | Flip the image | (`horizontal`: bool, `vertical`: bool) |
-| `LIGHT_ENHANCE` | Enhance the light | (`level`: float) |
+| `BRIGHTNESS_AND_CONTRAST` | Enhance the image brightness and contrast | (`alpha`: float, `beta`: int) |
 | `BILATERAL_FILTER` | OpenCV Bilateral filter | (`kernel_size`: int) |
 | `FPS` | Show the FPS | (`flip`: bool, `scale`: float, `color`: list) |
 
