@@ -78,7 +78,7 @@ class PipelineStep(Thread):
 
     def send_message(self, message):
         try:
-            self.queue.put(message, block=False)
+            self.queue.put(message, block=True, timeout=0.1)
         except Full:
             return False
         return True
